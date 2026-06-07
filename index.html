@@ -3,695 +3,954 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>音楽教室向け予約管理システム</title>
+<title>Growthbase — 音楽だけで、生きていく。</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600&family=Noto+Sans+JP:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;600&family=Noto+Sans+JP:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --mint-50:  #f0faf6;
-    --mint-100: #d6f2e7;
-    --mint-200: #a8e0cb;
-    --mint-400: #5bbf9a;
-    --mint-600: #1D9E75;
-    --mint-800: #0F6E56;
-    --mint-900: #085041;
-    --gray-50:  #f8f8f6;
-    --gray-100: #eeede9;
-    --gray-200: #d8d7d2;
-    --gray-400: #9c9b96;
-    --gray-600: #5f5e5a;
-    --gray-900: #1c1c1a;
-    --white: #ffffff;
-    --radius-sm: 6px;
-    --radius-md: 10px;
-    --radius-lg: 16px;
-  }
+:root {
+  --bg:        #0b1a14;
+  --bg-card:   #101e17;
+  --bg-raised: #152119;
+  --mint:      #6EE7B7;
+  --mint-dim:  #3ecf92;
+  --mint-muted:#1a4535;
+  --mint-faint:#0f2a20;
+  --white:     #f4f9f6;
+  --gray-hi:   #cdddd5;
+  --gray-mid:  #7a9a8a;
+  --gray-lo:   #3a5448;
+  --border:    rgba(110,231,183,0.12);
+  --border-hi: rgba(110,231,183,0.28);
+  --r-sm: 6px;
+  --r-md: 12px;
+  --r-lg: 20px;
+}
 
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  body {
-    font-family: 'Noto Sans JP', sans-serif;
-    font-size: 15px;
-    line-height: 1.75;
-    color: var(--gray-900);
-    background: var(--white);
-    -webkit-font-smoothing: antialiased;
-  }
+html { scroll-behavior: smooth; }
 
-  .serif { font-family: 'Noto Serif JP', serif; }
+body {
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--gray-hi);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+}
 
-  /* ─── NAV ─── */
-  nav {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    background: rgba(255,255,255,0.92);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--mint-100);
-    padding: 0 32px;
-    height: 56px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .nav-logo {
-    font-family: 'Noto Serif JP', serif;
-    font-size: 15px;
-    font-weight: 600;
-    color: var(--mint-800);
-    letter-spacing: 0.02em;
-  }
-  .nav-cta {
-    background: var(--mint-600);
-    color: var(--white);
-    font-size: 13px;
-    font-weight: 500;
-    padding: 8px 20px;
-    border-radius: var(--radius-sm);
-    text-decoration: none;
-    border: none;
-    cursor: pointer;
-    transition: background 0.15s;
-  }
-  .nav-cta:hover { background: var(--mint-800); }
+.serif { font-family: 'Noto Serif JP', serif; }
+.mono  { font-family: 'DM Mono', monospace; }
 
-  /* ─── HERO ─── */
-  .hero {
-    background: linear-gradient(160deg, var(--mint-50) 0%, var(--white) 60%);
-    padding: 80px 32px 72px;
-    text-align: center;
-    border-bottom: 1px solid var(--mint-100);
-  }
-  .hero-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 12px;
-    font-weight: 500;
-    color: var(--mint-800);
-    background: var(--mint-100);
-    padding: 5px 14px;
-    border-radius: 99px;
-    margin-bottom: 32px;
-    letter-spacing: 0.04em;
-  }
-  .hero h1 {
-    font-family: 'Noto Serif JP', serif;
-    font-size: clamp(28px, 5vw, 42px);
-    font-weight: 600;
-    line-height: 1.45;
-    margin-bottom: 20px;
-    color: var(--gray-900);
-  }
-  .hero h1 em {
-    font-style: normal;
-    color: var(--mint-600);
-  }
-  .hero-sub {
-    font-size: 15px;
-    color: var(--gray-600);
-    max-width: 500px;
-    margin: 0 auto 40px;
-    line-height: 1.8;
-  }
-  .hero-cta-wrap {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-  }
-  .btn-primary {
-    display: inline-block;
-    background: var(--mint-600);
-    color: var(--white);
-    font-size: 15px;
-    font-weight: 500;
-    padding: 15px 40px;
-    border-radius: var(--radius-md);
-    text-decoration: none;
-    border: none;
-    cursor: pointer;
-    transition: background 0.15s, transform 0.1s;
-    letter-spacing: 0.02em;
-  }
-  .btn-primary:hover { background: var(--mint-800); }
-  .btn-primary:active { transform: scale(0.98); }
-  .hero-note {
-    font-size: 12px;
-    color: var(--gray-400);
-  }
+/* ── NAV ── */
+nav {
+  position: sticky; top: 0; z-index: 100;
+  height: 58px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 40px;
+  background: rgba(11,26,20,0.85);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo {
+  font-family: 'DM Mono', monospace;
+  font-size: 15px;
+  color: var(--mint);
+  letter-spacing: 0.04em;
+}
+.nav-links {
+  display: flex; gap: 32px; list-style: none;
+}
+.nav-links a {
+  font-size: 13px;
+  color: var(--gray-mid);
+  text-decoration: none;
+  letter-spacing: 0.02em;
+  transition: color 0.15s;
+}
+.nav-links a:hover { color: var(--mint); }
+.nav-cta {
+  background: var(--mint);
+  color: var(--bg);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 8px 22px;
+  border-radius: var(--r-sm);
+  text-decoration: none;
+  transition: opacity 0.15s;
+}
+.nav-cta:hover { opacity: 0.85; }
 
-  /* ─── STATS ─── */
-  .stats {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    border-bottom: 1px solid var(--mint-100);
-    background: var(--white);
-  }
-  .stat-item {
-    padding: 32px 20px;
-    text-align: center;
-    border-right: 1px solid var(--mint-100);
-  }
-  .stat-item:last-child { border-right: none; }
-  .stat-num {
-    font-family: 'Noto Serif JP', serif;
-    font-size: 36px;
-    font-weight: 600;
-    color: var(--mint-600);
-    display: block;
-    line-height: 1.2;
-    margin-bottom: 6px;
-  }
-  .stat-label {
-    font-size: 12px;
-    color: var(--gray-400);
-    line-height: 1.5;
-  }
+/* ── HERO ── */
+.hero {
+  min-height: 92vh;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center;
+  padding: 100px 40px 80px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% -10%, rgba(110,231,183,0.1) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 40% at 80% 80%, rgba(110,231,183,0.05) 0%, transparent 60%);
+  pointer-events: none;
+}
+.hero-label {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  color: var(--mint);
+  background: var(--mint-faint);
+  border: 1px solid var(--border-hi);
+  padding: 5px 16px;
+  border-radius: 99px;
+  margin-bottom: 44px;
+  text-transform: uppercase;
+}
+.hero-label::before {
+  content: '';
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--mint);
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%,100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.4; transform: scale(0.7); }
+}
+.hero h1 {
+  font-family: 'Noto Serif JP', serif;
+  font-size: clamp(36px, 6vw, 68px);
+  font-weight: 300;
+  line-height: 1.35;
+  color: var(--white);
+  margin-bottom: 28px;
+  letter-spacing: -0.01em;
+}
+.hero h1 em {
+  font-style: normal;
+  color: var(--mint);
+}
+.hero-sub {
+  font-size: 16px;
+  color: var(--gray-mid);
+  max-width: 480px;
+  line-height: 1.9;
+  margin-bottom: 52px;
+}
+.hero-actions {
+  display: flex; flex-direction: column; align-items: center; gap: 12px;
+}
+.btn-primary {
+  display: inline-block;
+  background: var(--mint);
+  color: var(--bg);
+  font-size: 15px;
+  font-weight: 500;
+  padding: 16px 44px;
+  border-radius: var(--r-md);
+  text-decoration: none;
+  letter-spacing: 0.02em;
+  transition: opacity 0.15s, transform 0.1s;
+}
+.btn-primary:hover  { opacity: 0.88; }
+.btn-primary:active { transform: scale(0.98); }
+.hero-note {
+  font-size: 12px;
+  color: var(--gray-lo);
+  letter-spacing: 0.04em;
+}
 
-  /* ─── SECTION BASE ─── */
-  .section {
-    padding: 72px 32px;
-    max-width: 780px;
-    margin: 0 auto;
-  }
-  .section-full {
-    padding: 72px 32px;
-    background: var(--mint-50);
-    border-top: 1px solid var(--mint-100);
-    border-bottom: 1px solid var(--mint-100);
-  }
-  .section-full > .inner {
-    max-width: 780px;
-    margin: 0 auto;
-  }
-  .section-label {
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.14em;
-    color: var(--mint-600);
-    text-transform: uppercase;
-    margin-bottom: 12px;
-  }
-  .section-title {
-    font-family: 'Noto Serif JP', serif;
-    font-size: clamp(22px, 3.5vw, 28px);
-    font-weight: 600;
-    line-height: 1.5;
-    margin-bottom: 10px;
-    color: var(--gray-900);
-  }
-  .section-desc {
-    font-size: 14px;
-    color: var(--gray-600);
-    margin-bottom: 44px;
-    max-width: 520px;
-    line-height: 1.8;
-  }
+/* ── STATS ── */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-card);
+}
+.stat-item {
+  padding: 36px 24px;
+  text-align: center;
+  border-right: 1px solid var(--border);
+}
+.stat-item:last-child { border-right: none; }
+.stat-num {
+  display: block;
+  font-family: 'Noto Serif JP', serif;
+  font-size: 38px;
+  font-weight: 300;
+  color: var(--mint);
+  line-height: 1.1;
+  margin-bottom: 8px;
+}
+.stat-label {
+  font-size: 12px;
+  color: var(--gray-mid);
+  line-height: 1.5;
+}
 
-  /* ─── PROBLEM ─── */
-  .problem-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 14px;
-  }
-  .problem-card {
-    background: var(--white);
-    border: 1px solid var(--mint-100);
-    border-radius: var(--radius-lg);
-    padding: 24px;
-  }
-  .problem-icon {
-    width: 36px;
-    height: 36px;
-    border-radius: var(--radius-sm);
-    background: var(--mint-100);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 14px;
-    color: var(--mint-800);
-    font-size: 17px;
-  }
-  .problem-card h3 {
-    font-size: 14px;
-    font-weight: 500;
-    margin-bottom: 6px;
-    color: var(--gray-900);
-  }
-  .problem-card p {
-    font-size: 13px;
-    color: var(--gray-600);
-    line-height: 1.7;
-  }
+/* ── SECTION BASE ── */
+.section {
+  padding: 96px 40px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+.section-alt {
+  padding: 96px 40px;
+  background: var(--bg-card);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.section-alt .inner {
+  max-width: 900px;
+  margin: 0 auto;
+}
+.sec-tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: var(--mint);
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  display: flex; align-items: center; gap: 10px;
+}
+.sec-tag::before {
+  content: '';
+  width: 24px; height: 1px;
+  background: var(--mint);
+}
+.sec-title {
+  font-family: 'Noto Serif JP', serif;
+  font-size: clamp(24px, 3.5vw, 34px);
+  font-weight: 300;
+  color: var(--white);
+  line-height: 1.5;
+  margin-bottom: 14px;
+}
+.sec-desc {
+  font-size: 14px;
+  color: var(--gray-mid);
+  max-width: 540px;
+  line-height: 1.9;
+  margin-bottom: 52px;
+}
 
-  /* ─── FEATURES ─── */
-  .feature-list {
-    display: flex;
-    flex-direction: column;
-    gap: 28px;
-  }
-  .feature-item {
-    display: flex;
-    gap: 20px;
-    align-items: flex-start;
-  }
-  .feature-icon-wrap {
-    width: 44px;
-    height: 44px;
-    border-radius: var(--radius-md);
-    background: var(--mint-100);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    color: var(--mint-800);
-    font-size: 20px;
-  }
-  .feature-text h3 {
-    font-size: 15px;
-    font-weight: 500;
-    margin-bottom: 5px;
-    color: var(--gray-900);
-  }
-  .feature-text p {
-    font-size: 13px;
-    color: var(--gray-600);
-    line-height: 1.75;
-  }
+/* ── PROBLEM ── */
+.problem-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.problem-card {
+  background: var(--bg-raised);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 28px 24px;
+  transition: border-color 0.2s;
+}
+.problem-card:hover { border-color: var(--border-hi); }
+.prob-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--mint);
+  letter-spacing: 0.1em;
+  margin-bottom: 16px;
+  opacity: 0.7;
+}
+.problem-card h3 {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--white);
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+.problem-card p {
+  font-size: 13px;
+  color: var(--gray-mid);
+  line-height: 1.8;
+}
 
-  /* ─── FLOW ─── */
-  .flow-steps {
-    display: flex;
-    flex-direction: column;
-  }
-  .flow-step {
-    display: flex;
-    gap: 20px;
-    align-items: flex-start;
-    padding-bottom: 32px;
-  }
-  .flow-step:last-child { padding-bottom: 0; }
-  .step-left {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    flex-shrink: 0;
-  }
-  .step-num {
-    width: 34px;
-    height: 34px;
-    border-radius: 50%;
-    background: var(--mint-600);
-    color: var(--white);
-    font-size: 13px;
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-  }
-  .step-line {
-    width: 1px;
-    flex: 1;
-    background: var(--mint-200);
-    margin-top: 6px;
-    min-height: 28px;
-  }
-  .flow-step:last-child .step-line { display: none; }
-  .step-body { padding-top: 4px; }
-  .step-body h3 {
-    font-size: 15px;
-    font-weight: 500;
-    margin-bottom: 5px;
-    color: var(--gray-900);
-  }
-  .step-body p {
-    font-size: 13px;
-    color: var(--gray-600);
-    line-height: 1.75;
-  }
+/* ── SOLUTION FLOW ── */
+.solution-intro {
+  background: var(--mint-faint);
+  border: 1px solid var(--border-hi);
+  border-radius: var(--r-lg);
+  padding: 28px 32px;
+  margin-bottom: 48px;
+  font-size: 14px;
+  color: var(--gray-hi);
+  line-height: 1.9;
+}
+.solution-intro strong { color: var(--mint); font-weight: 500; }
 
-  /* ─── PRICING ─── */
-  .plan-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 14px;
-  }
-  .plan-card {
-    background: var(--white);
-    border: 1px solid var(--mint-100);
-    border-radius: var(--radius-lg);
-    padding: 28px 22px;
-    display: flex;
-    flex-direction: column;
-  }
-  .plan-card.featured {
-    border: 2px solid var(--mint-600);
-    position: relative;
-  }
-  .plan-badge {
-    position: absolute;
-    top: -12px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: var(--mint-600);
-    color: var(--white);
-    font-size: 11px;
-    font-weight: 500;
-    padding: 3px 14px;
-    border-radius: 99px;
-    white-space: nowrap;
-  }
-  .plan-tier {
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: 0.08em;
-    color: var(--mint-600);
-    text-transform: uppercase;
-    margin-bottom: 8px;
-  }
-  .plan-price {
-    font-family: 'Noto Serif JP', serif;
-    font-size: 30px;
-    font-weight: 600;
-    color: var(--gray-900);
-    margin-bottom: 2px;
-    line-height: 1.2;
-  }
-  .plan-price span {
-    font-size: 13px;
-    font-weight: 400;
-    color: var(--gray-400);
-  }
-  .plan-desc {
-    font-size: 12px;
-    color: var(--gray-600);
-    margin: 12px 0 18px;
-    padding-bottom: 18px;
-    border-bottom: 1px solid var(--mint-100);
-    line-height: 1.7;
-    flex: 1;
-  }
-  .plan-features {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  .plan-features li {
-    font-size: 12px;
-    color: var(--gray-600);
-    display: flex;
-    align-items: flex-start;
-    gap: 8px;
-    line-height: 1.5;
-  }
-  .plan-features li::before {
-    content: '';
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
-    background: var(--mint-100);
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Cpath d='M3 7l2.5 2.5L11 4.5' stroke='%230F6E56' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-    background-size: contain;
-    flex-shrink: 0;
-    margin-top: 1px;
-  }
+.funnel {
+  display: flex;
+  gap: 0;
+  margin-bottom: 48px;
+  overflow-x: auto;
+}
+.funnel-step {
+  flex: 1;
+  text-align: center;
+  position: relative;
+  min-width: 100px;
+}
+.funnel-box {
+  background: var(--bg-raised);
+  border: 1px solid var(--border);
+  border-radius: var(--r-sm);
+  padding: 14px 8px 10px;
+  margin: 0 4px;
+  position: relative;
+  transition: border-color 0.2s;
+}
+.funnel-step.sns .funnel-box  { border-color: rgba(110,231,183,0.2); }
+.funnel-step.lp  .funnel-box  { border-color: rgba(110,231,183,0.4); background: var(--mint-faint); }
+.funnel-step.lp  .funnel-box .funnel-label { color: var(--mint); }
+.funnel-label {
+  font-size: 12px;
+  color: var(--white);
+  font-weight: 500;
+  line-height: 1.4;
+  margin-bottom: 6px;
+}
+.funnel-badge {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  color: var(--gray-mid);
+  letter-spacing: 0.06em;
+}
+.funnel-arrow {
+  position: absolute;
+  right: -6px; top: 50%;
+  transform: translateY(-50%);
+  color: var(--gray-lo);
+  font-size: 14px;
+  z-index: 1;
+}
+.funnel-step:last-child .funnel-arrow { display: none; }
 
-  /* ─── CTA BOTTOM ─── */
-  .cta-bottom {
-    background: var(--mint-800);
-    padding: 80px 32px;
-    text-align: center;
-  }
-  .cta-bottom h2 {
-    font-family: 'Noto Serif JP', serif;
-    font-size: clamp(22px, 3.5vw, 28px);
-    font-weight: 600;
-    color: var(--white);
-    margin-bottom: 14px;
-    line-height: 1.5;
-  }
-  .cta-bottom p {
-    font-size: 14px;
-    color: var(--mint-200);
-    margin-bottom: 36px;
-    line-height: 1.8;
-  }
-  .btn-white {
-    display: inline-block;
-    background: var(--white);
-    color: var(--mint-800);
-    font-size: 15px;
-    font-weight: 500;
-    padding: 15px 40px;
-    border-radius: var(--radius-md);
-    text-decoration: none;
-    border: none;
-    cursor: pointer;
-    transition: opacity 0.15s, transform 0.1s;
-  }
-  .btn-white:hover { opacity: 0.9; }
-  .btn-white:active { transform: scale(0.98); }
-  .cta-note {
-    font-size: 12px;
-    color: var(--mint-200);
-    margin-top: 12px;
-    opacity: 0.7;
-  }
+.two-services {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.service-card {
+  background: var(--bg-raised);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 32px 28px;
+}
+.service-card h3 {
+  font-family: 'DM Mono', monospace;
+  font-size: 13px;
+  color: var(--mint);
+  letter-spacing: 0.06em;
+  margin-bottom: 10px;
+}
+.service-card p {
+  font-size: 13px;
+  color: var(--gray-mid);
+  line-height: 1.85;
+}
 
-  /* ─── FOOTER ─── */
-  footer {
-    background: var(--white);
-    border-top: 1px solid var(--mint-100);
-    padding: 28px 32px;
-    text-align: center;
-    font-size: 12px;
-    color: var(--gray-400);
-  }
+/* ── SNS PORTAL ── */
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+.feature-card {
+  background: var(--bg-raised);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 28px 24px;
+  transition: border-color 0.2s;
+}
+.feature-card:hover { border-color: var(--border-hi); }
+.feature-tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: var(--mint);
+  text-transform: uppercase;
+  margin-bottom: 14px;
+  opacity: 0.8;
+}
+.feature-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 28px;
+  color: var(--mint-muted);
+  line-height: 1;
+  margin-bottom: 16px;
+  font-weight: 500;
+}
+.feature-card h3 {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--white);
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+.feature-card p {
+  font-size: 13px;
+  color: var(--gray-mid);
+  line-height: 1.85;
+}
 
-  /* ─── RESPONSIVE ─── */
-  @media (max-width: 600px) {
-    nav { padding: 0 16px; }
-    .hero { padding: 60px 16px 56px; }
-    .stats { grid-template-columns: repeat(3, 1fr); }
-    .stat-num { font-size: 26px; }
-    .section { padding: 56px 16px; }
-    .section-full { padding: 56px 16px; }
-    .problem-grid { grid-template-columns: 1fr; }
-    .plan-grid { grid-template-columns: 1fr; }
-    .plan-card.featured { margin-top: 12px; }
-    .cta-bottom { padding: 60px 16px; }
-    footer { padding: 24px 16px; }
-  }
+/* ── PRICING ── */
+.pricing-wrap {
+  max-width: 600px;
+  margin: 0 auto;
+}
+.plan-card {
+  background: var(--bg-raised);
+  border: 1px solid var(--border-hi);
+  border-radius: var(--r-lg);
+  padding: 44px 44px 40px;
+  text-align: center;
+  position: relative;
+}
+.plan-tag {
+  display: inline-block;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  color: var(--mint);
+  text-transform: uppercase;
+  background: var(--mint-faint);
+  border: 1px solid var(--border-hi);
+  padding: 4px 16px;
+  border-radius: 99px;
+  margin-bottom: 28px;
+}
+.plan-name {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 20px;
+  font-weight: 300;
+  color: var(--white);
+  margin-bottom: 12px;
+}
+.plan-original {
+  font-size: 13px;
+  color: var(--gray-lo);
+  margin-bottom: 8px;
+  text-decoration: line-through;
+}
+.plan-price {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 64px;
+  font-weight: 300;
+  color: var(--mint);
+  line-height: 1;
+  margin-bottom: 4px;
+  letter-spacing: -0.02em;
+}
+.plan-price-unit {
+  font-size: 14px;
+  color: var(--gray-mid);
+  margin-bottom: 36px;
+}
+.plan-divider {
+  height: 1px;
+  background: var(--border);
+  margin-bottom: 32px;
+}
+.plan-includes-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--gray-mid);
+  text-transform: uppercase;
+  margin-bottom: 24px;
+}
+.plan-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  text-align: left;
+  margin-bottom: 36px;
+}
+.plan-col-title {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--mint);
+  letter-spacing: 0.06em;
+  margin-bottom: 12px;
+}
+.plan-col ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.plan-col li {
+  font-size: 12px;
+  color: var(--gray-mid);
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  line-height: 1.5;
+}
+.plan-col li::before {
+  content: '·';
+  color: var(--mint);
+  font-size: 18px;
+  line-height: 1;
+  flex-shrink: 0;
+  margin-top: -1px;
+}
+.plan-tags {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.plan-tag-item {
+  font-size: 12px;
+  color: var(--gray-mid);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  padding: 5px 16px;
+  border-radius: 99px;
+}
+
+/* ── CREDENTIALS ── */
+.cred-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.cred-card {
+  background: var(--bg-raised);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 28px 24px;
+}
+.cred-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  color: var(--mint);
+  letter-spacing: 0.1em;
+  margin-bottom: 6px;
+  opacity: 0.7;
+}
+.cred-type {
+  font-size: 11px;
+  color: var(--gray-mid);
+  letter-spacing: 0.06em;
+  margin-bottom: 14px;
+}
+.cred-card h3 {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--white);
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+.cred-card p {
+  font-size: 13px;
+  color: var(--gray-mid);
+  line-height: 1.8;
+  margin-bottom: 16px;
+}
+.cred-result {
+  background: var(--mint-faint);
+  border: 1px solid var(--border-hi);
+  border-radius: var(--r-sm);
+  padding: 10px 14px;
+}
+.cred-result-line {
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  color: var(--mint);
+  line-height: 1.7;
+}
+
+/* ── CTA BOTTOM ── */
+.cta-bottom {
+  background: var(--bg-card);
+  border-top: 1px solid var(--border);
+  padding: 100px 40px;
+  text-align: center;
+}
+.cta-bottom h2 {
+  font-family: 'Noto Serif JP', serif;
+  font-size: clamp(26px, 4vw, 40px);
+  font-weight: 300;
+  color: var(--white);
+  margin-bottom: 16px;
+  line-height: 1.5;
+}
+.cta-bottom p {
+  font-size: 14px;
+  color: var(--gray-mid);
+  margin-bottom: 44px;
+  line-height: 1.9;
+}
+.cta-meta {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  margin-top: 24px;
+}
+.cta-meta-item {
+  font-size: 12px;
+  color: var(--gray-lo);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.cta-meta-item::before {
+  content: '✓';
+  color: var(--mint);
+  font-size: 11px;
+}
+
+/* ── FOOTER ── */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 28px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  color: var(--gray-lo);
+}
+.footer-logo {
+  font-family: 'DM Mono', monospace;
+  color: var(--mint);
+  opacity: 0.5;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 700px) {
+  nav { padding: 0 20px; }
+  .nav-links { display: none; }
+  .hero { padding: 72px 20px 64px; min-height: 80vh; }
+  .section { padding: 64px 20px; }
+  .section-alt { padding: 64px 20px; }
+  .problem-grid { grid-template-columns: 1fr; }
+  .feature-grid  { grid-template-columns: 1fr; }
+  .two-services  { grid-template-columns: 1fr; }
+  .cred-grid     { grid-template-columns: 1fr; }
+  .plan-cols     { grid-template-columns: 1fr; }
+  .stats { grid-template-columns: repeat(3, 1fr); }
+  .stat-num { font-size: 26px; }
+  .plan-price { font-size: 48px; }
+  .plan-card { padding: 32px 24px; }
+  .cta-meta { flex-direction: column; gap: 10px; align-items: center; }
+  footer { flex-direction: column; gap: 8px; text-align: center; }
+}
 </style>
 </head>
 <body>
 
 <!-- NAV -->
 <nav>
-  <div class="nav-logo">ReservationManager</div>
+  <div class="nav-logo">Growthbase</div>
+  <ul class="nav-links">
+    <li><a href="#problem">課題</a></li>
+    <li><a href="#solution">解決策</a></li>
+    <li><a href="#sns">SNS Portal</a></li>
+    <li><a href="#lesson">Lesson Portal</a></li>
+    <li><a href="#pricing">料金</a></li>
+  </ul>
   <a href="#pricing" class="nav-cta">料金を見る</a>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-badge">音楽教室向け 予約管理システム</div>
-  <h1 class="serif">生徒が自分で予約を管理できると、<br><em>教室の信頼が変わる。</em></h1>
-  <p class="hero-sub">マジックリンクで簡単ログイン。予約確認・キャンセル・変更がスマホからいつでもできる、個人講師のための予約ポータル。</p>
-  <div class="hero-cta-wrap">
-    <a href="#pricing" class="btn-primary">まず料金を見る</a>
-    <p class="hero-note">初期費用0円・導入時間40分〜</p>
+  <div class="hero-label">個人レッスン講師向けサービス</div>
+  <h1 class="serif">音楽だけで、<br><em>生きていく。</em></h1>
+  <p class="hero-sub">集客の壁を越えて、音楽で生活できる講師を増やす。<br>SNS Portal × Lesson Portal の2サービスで、集客から運営まで一貫して改善します。</p>
+  <div class="hero-actions">
+    <a href="#pricing" class="btn-primary">料金を確認する</a>
+    <p class="hero-note">初期費用 ¥0・契約縛りなし・いつでも解約可能</p>
   </div>
 </section>
 
 <!-- STATS -->
 <div class="stats">
   <div class="stat-item">
-    <span class="stat-num">40分</span>
-    <div class="stat-label">最短導入時間</div>
-  </div>
-  <div class="stat-item">
-    <span class="stat-num">0円</span>
+    <span class="stat-num">¥0</span>
     <div class="stat-label">初期費用</div>
   </div>
   <div class="stat-item">
-    <span class="stat-num">24時間</span>
-    <div class="stat-label">生徒がいつでも操作可能</div>
+    <span class="stat-num">2</span>
+    <div class="stat-label">サービスがセットに</div>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">¥20,000</span>
+    <div class="stat-label">月額・一律料金</div>
   </div>
 </div>
 
 <!-- PROBLEM -->
-<div class="section-full">
+<div class="section-alt" id="problem">
   <div class="inner">
-    <div class="section-label">課題</div>
-    <h2 class="section-title serif">こんなことで<br>消耗していませんか？</h2>
-    <p class="section-desc">予約の連絡・確認・キャンセル対応。ひとつひとつは小さくても、積み重なると大きな負担に。</p>
+    <div class="sec-tag">PROBLEM</div>
+    <h2 class="sec-title serif">音楽が好きでも、<br>集客の壁が立ちはだかる。</h2>
+    <p class="sec-desc">一つひとつは小さな問題でも、積み重なると講師としての成長を止めてしまいます。</p>
     <div class="problem-grid">
       <div class="problem-card">
-        <div class="problem-icon">✉️</div>
-        <h3>LINEやメールで予約の往復</h3>
-        <p>生徒からの予約確認・変更の連絡に都度返信。レッスン外の時間が奪われる。</p>
+        <div class="prob-num">01</div>
+        <h3>SNSを始めたくても<br>一歩が踏み出せない</h3>
+        <p>やってみたいけど何から始めればいいかわからない。続けようとしても途中で止まってしまう。</p>
       </div>
       <div class="problem-card">
-        <div class="problem-icon">📵</div>
-        <h3>直前キャンセルの連絡漏れ</h3>
-        <p>キャンセルポリシーが共有されておらず、当日になって気づくケースが発生する。</p>
+        <div class="prob-num">02</div>
+        <h3>生徒が増えるほど、音楽に<br>使える時間が減る</h3>
+        <p>予約・連絡・スケジュール調整に追われ、肝心のレッスン準備や練習の時間が削られていく。</p>
       </div>
       <div class="problem-card">
-        <div class="problem-icon">🔍</div>
-        <h3>次のレッスン日が把握できない</h3>
-        <p>「次いつでしたっけ？」と聞かれるたびにカレンダーを確認している。</p>
-      </div>
-      <div class="problem-card">
-        <div class="problem-icon">📊</div>
-        <h3>リピート率・稼働率が見えない</h3>
-        <p>感覚で運営していて、どの生徒が継続しているか数字で把握できていない。</p>
+        <div class="prob-num">03</div>
+        <h3>頑張っても、<br>手応えが見えない</h3>
+        <p>投稿しても反応がわからない。何が正解かわからないまま時間だけが過ぎていく。</p>
       </div>
     </div>
   </div>
 </div>
 
-<!-- FEATURES -->
-<section class="section">
-  <div class="section-label">解決策</div>
-  <h2 class="section-title serif">生徒が自走する、<br>予約体験を届ける。</h2>
-  <p class="section-desc">システムが間に入ることで、講師は教えることに集中できます。</p>
-  <div class="feature-list">
-    <div class="feature-item">
-      <div class="feature-icon-wrap">✉️</div>
-      <div class="feature-text">
-        <h3>マジックリンクでパスワードなしログイン</h3>
-        <p>メールアドレスを入力するだけ。生徒はパスワードを覚えなくてよく、すぐに自分の予約一覧を確認できます。</p>
+<!-- SOLUTION -->
+<section class="section" id="solution">
+  <div class="sec-tag">GOAL</div>
+  <h2 class="sec-title serif">集客から運営まで、<br>一貫して改善します。</h2>
+  <p class="sec-desc">SNSで集客の仕組みをつくり、増えた生徒を効率よく運営する。Growthbaseは講師が「音楽だけに集中できる環境」をデータで設計します。</p>
+
+  <div class="funnel">
+    <div class="funnel-step sns">
+      <div class="funnel-box">
+        <div class="funnel-label">動画を見られる</div>
+        <div class="funnel-badge">SNS Portal</div>
+      </div>
+      <div class="funnel-arrow">›</div>
+    </div>
+    <div class="funnel-step sns">
+      <div class="funnel-box">
+        <div class="funnel-label">複数本を視聴</div>
+        <div class="funnel-badge">SNS Portal</div>
+      </div>
+      <div class="funnel-arrow">›</div>
+    </div>
+    <div class="funnel-step sns">
+      <div class="funnel-box">
+        <div class="funnel-label">信頼・共感</div>
+        <div class="funnel-badge">SNS Portal</div>
+      </div>
+      <div class="funnel-arrow">›</div>
+    </div>
+    <div class="funnel-step sns">
+      <div class="funnel-box">
+        <div class="funnel-label">問い合わせ</div>
+        <div class="funnel-badge">SNS Portal</div>
+      </div>
+      <div class="funnel-arrow">›</div>
+    </div>
+    <div class="funnel-step lp">
+      <div class="funnel-box">
+        <div class="funnel-label">予約・申込</div>
+        <div class="funnel-badge">Lesson Portal</div>
+      </div>
+      <div class="funnel-arrow">›</div>
+    </div>
+    <div class="funnel-step lp">
+      <div class="funnel-box">
+        <div class="funnel-label">レッスン完了</div>
+        <div class="funnel-badge">Lesson Portal</div>
+      </div>
+      <div class="funnel-arrow">›</div>
+    </div>
+    <div class="funnel-step lp">
+      <div class="funnel-box">
+        <div class="funnel-label">継続・紹介</div>
+        <div class="funnel-badge">Lesson Portal</div>
       </div>
     </div>
-    <div class="feature-item">
-      <div class="feature-icon-wrap">📱</div>
-      <div class="feature-text">
-        <h3>スマホ対応の予約一覧画面</h3>
-        <p>生徒はスマホから予約の確認・キャンセル・変更が完結。「次いつでしたっけ」の問い合わせがなくなります。</p>
-      </div>
+  </div>
+
+  <div class="two-services">
+    <div class="service-card">
+      <h3>SNS Portal</h3>
+      <p>YouTube分析・コンテンツ戦略・月次レポートで、集客の仕組みをデータで設計する。</p>
     </div>
-    <div class="feature-item">
-      <div class="feature-icon-wrap">⏱️</div>
-      <div class="feature-text">
-        <h3>48時間前キャンセル制限を自動適用</h3>
-        <p>期限を過ぎたキャンセルは画面でブロック。ポリシーの説明不要で、直前キャンセルが自然に減ります。</p>
-      </div>
-    </div>
-    <div class="feature-item">
-      <div class="feature-icon-wrap">📈</div>
-      <div class="feature-text">
-        <h3>講師ダッシュボードで数字を把握</h3>
-        <p>今月の予約件数・キャンセル率・リピート率・直近予約をひと目で確認。感覚運営から脱却できます。</p>
-      </div>
+    <div class="service-card">
+      <h3>Lesson Portal</h3>
+      <p>予約管理・生徒管理・上達可視化で、増えた生徒を効率よく運営できる環境をつくる。</p>
     </div>
   </div>
 </section>
 
-<!-- FLOW -->
-<div class="section-full">
+<!-- SNS PORTAL -->
+<div class="section-alt" id="sns">
   <div class="inner">
-    <div class="section-label">導入の流れ</div>
-    <h2 class="section-title serif">最短40分で<br>使いはじめられます。</h2>
-    <p class="section-desc">難しい設定は不要。手順に沿って進めるだけです。</p>
-    <div class="flow-steps">
-      <div class="flow-step">
-        <div class="step-left">
-          <div class="step-num">1</div>
-          <div class="step-line"></div>
-        </div>
-        <div class="step-body">
-          <h3>Cal.comで予約URLを取得</h3>
-          <p>無料アカウントを作成し、レッスンのイベントタイプを設定。Googleカレンダーと連携します。</p>
-        </div>
+    <div class="sec-tag">SNS Portal</div>
+    <h2 class="sec-title serif">データで「伸びる動画」を<br>一緒に作り続ける。</h2>
+    <p class="sec-desc">感覚ではなくデータで判断できる状態をつくります。</p>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="feature-num">01</div>
+        <div class="feature-tag">Setup &amp; Start</div>
+        <h3>始めるところから、一緒に動く</h3>
+        <p>チャンネル開設・初期設定・投稿の型作りまで支援。SNSをやったことがない状態からでも始められる。</p>
       </div>
-      <div class="flow-step">
-        <div class="step-left">
-          <div class="step-num">2</div>
-          <div class="step-line"></div>
-        </div>
-        <div class="step-body">
-          <h3>Webhookを設定</h3>
-          <p>Cal.comの予約情報を自動でシステムに連携するための設定を行います。コピペ作業のみです。</p>
-        </div>
+      <div class="feature-card">
+        <div class="feature-num">02</div>
+        <div class="feature-tag">Keyword &amp; Channel Analysis</div>
+        <h3>伸びるネタを発掘し、効果を可視化する</h3>
+        <p>ラッコキーワード・vidIQで需要のあるテーマを発掘。CTR・視聴維持率・VPHで効果を計測し、勝ちパターンを横展開する。</p>
       </div>
-      <div class="flow-step">
-        <div class="step-left">
-          <div class="step-num">3</div>
-          <div class="step-line"></div>
-        </div>
-        <div class="step-body">
-          <h3>管理画面から講師を登録</h3>
-          <p>名前・メールアドレス・プランを入力して送信するだけ。数分で完了します。</p>
-        </div>
+      <div class="feature-card">
+        <div class="feature-num">03</div>
+        <div class="feature-tag">Content Strategy</div>
+        <h3>続けられる仕組みをつくる</h3>
+        <p>投稿頻度・タイミング・構成の改善提案。一人で続けようとすると止まるから、毎月伴走しながら改善サイクルを回す。</p>
       </div>
-      <div class="flow-step">
-        <div class="step-left">
-          <div class="step-num">4</div>
-          <div class="step-line"></div>
+      <div class="feature-card">
+        <div class="feature-num">04</div>
+        <div class="feature-tag">Monthly Report</div>
+        <h3>月次レポートで次の一手を示す</h3>
+        <p>毎月データを集計し、翌月の改善アクションをレポートとして提出。感覚ではなくデータで判断できる状態にする。</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LESSON PORTAL -->
+<section class="section" id="lesson">
+  <div class="sec-tag">Lesson Portal</div>
+  <h2 class="sec-title serif">増えた生徒を、<br>仕組みで運営する。</h2>
+  <p class="sec-desc">管理の手間をゼロに近づけ、レッスンと音楽に集中できる時間を取り戻す。</p>
+  <div class="feature-grid">
+    <div class="feature-card">
+      <div class="feature-num">01</div>
+      <div class="feature-tag">Reservation</div>
+      <h3>予約管理を自動化する</h3>
+      <p>カレンダー連携で予約・キャンセルをリアルタイム反映。手動入力なしで常に最新の状態を把握できる。</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-num">02</div>
+      <div class="feature-tag">Student Growth</div>
+      <h3>生徒の上達をグラフで見せる</h3>
+      <p>目標・マイルストーンに対する実績をグラフで表示。生徒自身が成長を実感でき、継続意欲が上がる。</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-num">03</div>
+      <div class="feature-tag">Vacancy Alert</div>
+      <h3>空き枠をボタン一つで告知する</h3>
+      <p>キャンセルで空きが出たとき、ボタンを押すだけで登録生徒全員にメール通知。埋め戻しが手動連絡なしで完結。</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-num">04</div>
+      <div class="feature-tag">AI Report</div>
+      <h3>月次レポートをAIが自動生成する</h3>
+      <p>予約・継続・休眠データをAIが分析し、インサイト付きレポートを生成。そのままLINEに貼り付けて送れる。</p>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<div class="section-alt" id="pricing">
+  <div class="inner">
+    <div class="sec-tag">PRICING</div>
+    <h2 class="sec-title serif">シンプルな、<br>一律料金。</h2>
+    <p class="sec-desc">SNS Portal と Lesson Portal、両方がこの料金に含まれます。</p>
+    <div class="pricing-wrap">
+      <div class="plan-card">
+        <div class="plan-tag">Growthbase Plan</div>
+        <div class="plan-name serif">通常 ¥25,000 / 月のところ</div>
+        <div class="plan-price">¥20,000</div>
+        <div class="plan-price-unit">/ 月</div>
+        <div class="plan-divider"></div>
+        <div class="plan-includes-label">含まれるもの</div>
+        <div class="plan-cols">
+          <div class="plan-col">
+            <div class="plan-col-title">SNS Portal <span style="color:var(--gray-lo);font-size:10px">（月額¥20,000相当）</span></div>
+            <ul>
+              <li>YouTube分析・コンテンツ戦略</li>
+              <li>月次レポート・改善提案</li>
+            </ul>
+          </div>
+          <div class="plan-col">
+            <div class="plan-col-title">Lesson Portal <span style="color:var(--gray-lo);font-size:10px">（月額¥5,000相当）</span></div>
+            <ul>
+              <li>予約管理・生徒管理</li>
+              <li>AI月次レポート自動生成</li>
+            </ul>
+          </div>
         </div>
-        <div class="step-body">
-          <h3>生徒に予約URLを共有して完了</h3>
-          <p>名刺のQRコードやLINEで予約URLを共有。生徒がCal.comから予約すると自動でポータルに反映されます。</p>
+        <div class="plan-tags">
+          <span class="plan-tag-item">初期費用なし</span>
+          <span class="plan-tag-item">契約縛りなし</span>
+          <span class="plan-tag-item">いつでも解約可能</span>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- PRICING -->
-<section class="section" id="pricing">
-  <div class="section-label">料金</div>
-  <h2 class="section-title serif">シンプルな<br>3プラン構成。</h2>
-  <p class="section-desc">生徒数・サポートニーズに合わせてお選びいただけます。</p>
-  <div class="plan-grid">
-    <div class="plan-card">
-      <div class="plan-tier">Basic</div>
-      <div class="plan-price">¥3,000 <span>/ 月</span></div>
-      <p class="plan-desc">予約管理をまず整えたい講師向け。基本機能をすべて使えます。</p>
-      <ul class="plan-features">
-        <li>予約一覧・キャンセル管理</li>
-        <li>マジックリンク認証</li>
-        <li>講師ダッシュボード</li>
-        <li>48時間キャンセル制限</li>
-      </ul>
+<!-- CREDENTIALS -->
+<section class="section">
+  <div class="sec-tag">APPENDIX — 運営者について</div>
+  <h2 class="sec-title serif">運営者のデータ分析実績</h2>
+  <p class="sec-desc">感覚ではなくデータで動く、7年以上の分析経験が土台にあります。</p>
+  <div class="cred-grid">
+    <div class="cred-card">
+      <div class="cred-num">01</div>
+      <div class="cred-type">Coupon Analytics</div>
+      <h3>クーポン効果測定・改善</h3>
+      <p>大手外食チェーンにてPOSデータをSQL・Excelで分析。クーポン施策の効果を数値化し改善提案を継続実施。</p>
+      <div class="cred-result">
+        <div class="cred-result-line">利用率 1.4% → 2.3%</div>
+        <div class="cred-result-line">売上 約4,000万円アップ</div>
+      </div>
     </div>
-    <div class="plan-card featured">
-      <div class="plan-badge">おすすめ</div>
-      <div class="plan-tier">Standard</div>
-      <div class="plan-price">¥5,000 <span>/ 月</span></div>
-      <p class="plan-desc">SNS集客にも力を入れたい講師向け。データを活かした発信をサポートします。</p>
-      <ul class="plan-features">
-        <li>Basicの全機能</li>
-        <li>SNS分析サポート</li>
-        <li>優先メールサポート</li>
-      </ul>
+    <div class="cred-card">
+      <div class="cred-num">02</div>
+      <div class="cred-type">Hospitality Analytics</div>
+      <h3>宿泊データ分析・予約最適化</h3>
+      <p>ホテル業にてAccessとExcelで宿泊データを分析。プラン・曜日・価格帯ごとの傾向を数値化し予約戦略に反映。</p>
+      <div class="cred-result">
+        <div class="cred-result-line">自社予約比率 16% → 20%</div>
+        <div class="cred-result-line">データ起点の改善を継続実施</div>
+      </div>
     </div>
-    <div class="plan-card">
-      <div class="plan-tier">Premium</div>
-      <div class="plan-price">¥10,000 <span>/ 月</span></div>
-      <p class="plan-desc">SNS運用をまるごとお任せしたい講師向け。コンテンツ制作まで伴走します。</p>
-      <ul class="plan-features">
-        <li>Standardの全機能</li>
-        <li>SNSコンテンツ作成サポート</li>
-        <li>専用サポート窓口</li>
-      </ul>
+    <div class="cred-card">
+      <div class="cred-num">03</div>
+      <div class="cred-type">Background</div>
+      <h3>累計7年のデータ分析経験</h3>
+      <p>ホテル業・外食産業でのデータ分析・DX推進・PMO経験。SQL・Excel・Accessを用いた大規模データ集計が専門。</p>
+      <div class="cred-result">
+        <div class="cred-result-line">ホテル・外食 計7年以上</div>
+        <div class="cred-result-line">SQL / Excel / Access / PMO</div>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- CTA BOTTOM -->
 <section class="cta-bottom">
-  <h2 class="serif">まず、使ってみてください。</h2>
-  <p>難しい設定は不要。40分で生徒向けポータルが立ち上がります。<br>クレジットカード不要・いつでも解約可能。</p>
-  <a href="mailto:jm100223@gmail.com" class="btn-white">お問い合わせ・申し込み</a>
-  <p class="cta-note">まずはお気軽にご連絡ください</p>
+  <h2 class="serif">今日から始めて、<br>教室を成長させよう。</h2>
+  <p>SNSで集客の壁を越えて、音楽で生活できる環境をつくります。<br>ご不明な点はいつでもご連絡ください。</p>
+  <a href="mailto:jm100223@gmail.com" class="btn-primary">お問い合わせ・申し込み</a>
+  <div class="cta-meta">
+    <span class="cta-meta-item">初期費用 ¥0</span>
+    <span class="cta-meta-item">契約縛りなし</span>
+    <span class="cta-meta-item">いつでも解約可能</span>
+    <span class="cta-meta-item">月額 ¥20,000</span>
+  </div>
 </section>
 
+<!-- FOOTER -->
 <footer>
-  <p>© 2026 音楽教室ポータル. All rights reserved.</p>
+  <span class="footer-logo">Growthbase</span>
+  <span>© 2026 Growthbase. All rights reserved.</span>
 </footer>
 
 </body>
