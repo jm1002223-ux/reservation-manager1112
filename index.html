@@ -668,6 +668,101 @@ footer {
   .cta-meta { flex-direction: column; gap: 10px; align-items: center; }
   footer { flex-direction: column; gap: 8px; text-align: center; }
 }
+/* ══════════════════════════════════════════════
+   脱・箱の羅列：縁取りカードの格子をやめ、
+   余白＋細い罫線＋書体で構成し直す（編集誌の組み方）
+   ══════════════════════════════════════════════ */
+
+/* 課題・特徴・実績：枠付きカードの格子 → 罫線区切りの縦リスト */
+.problem-grid, .feature-grid, .cred-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border-top: 1px solid var(--border);
+  margin-top: 4px;
+}
+.problem-card, .feature-card, .cred-card {
+  background: none;
+  border: 0;
+  border-bottom: 1px solid var(--border);
+  border-radius: 0;
+  padding: 40px 4px;
+  transition: none;
+}
+.problem-card:hover, .feature-card:hover, .cred-card:hover { border-color: var(--border); }
+
+.prob-num, .feature-num, .cred-num {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 26px;
+  font-weight: 300;
+  line-height: 1;
+  color: var(--mint);
+  opacity: 0.45;
+  margin-bottom: 16px;
+}
+.feature-tag, .cred-type {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gray-mid);
+  opacity: 0.85;
+  margin-bottom: 8px;
+}
+.problem-card h3, .feature-card h3, .cred-card h3 {
+  font-family: 'Noto Serif JP', serif;
+  font-size: 20px;
+  font-weight: 300;
+  line-height: 1.6;
+  margin-bottom: 12px;
+}
+.problem-card p, .feature-card p, .cred-card p { max-width: 62ch; }
+
+.cred-result {
+  background: none;
+  border: 0;
+  border-left: 2px solid var(--mint-muted);
+  border-radius: 0;
+  padding: 4px 0 4px 16px;
+  margin-top: 18px;
+}
+
+/* 2サービス：枠2つ → 罫線で仕切る2欄（枠なし） */
+.two-services {
+  border-top: 1px solid var(--border);
+  margin-top: 4px;
+  gap: 0;
+}
+.service-card {
+  background: none;
+  border: 0;
+  border-radius: 0;
+  padding: 34px 40px 34px 0;
+}
+.service-card + .service-card {
+  border-left: 1px solid var(--border);
+  padding-left: 48px;
+}
+
+/* ファネル：塗り箱の連続 → 軽い文字の流れ */
+.funnel {
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 26px 0;
+  margin-bottom: 44px;
+}
+.funnel-box,
+.funnel-step.sns .funnel-box,
+.funnel-step.lp .funnel-box {
+  background: none;
+  border: 0;
+  padding: 4px 2px;
+  margin: 0;
+}
+.funnel-arrow { color: var(--mint); opacity: 0.4; }
+
+/* 数値ストリップ：内側の縦罫を消す */
+.stat-item { border-right: 0; }
 </style>
 </head>
 <body>
