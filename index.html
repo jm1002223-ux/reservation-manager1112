@@ -4,6 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Growthbase — 音楽だけで、生きていく。</title>
+<meta name="description" content="個人レッスン講師向けサービス。SNS Portal × Lesson Portal の2サービスで、集客から運営まで一貫して改善します。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Growthbase — 音楽だけで、生きていく。">
+<meta property="og:description" content="SNS Portal × Lesson Portal の2サービスで、集客から運営まで一貫して改善する、個人レッスン講師向けサービス。">
+<meta property="og:image" content="img/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Growthbase — 音楽だけで、生きていく。">
+<meta name="twitter:description" content="SNS Portal × Lesson Portal の2サービスで、集客から運営まで一貫して改善する、個人レッスン講師向けサービス。">
+<meta name="twitter:image" content="img/og.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;600&family=Noto+Sans+JP:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -93,11 +102,24 @@ nav {
   padding: 100px 40px 80px;
   position: relative;
   overflow: hidden;
+  /* 実写のグランドピアノを最背面に。暗幕グラデで沈めてタイトル＆金の譜面を読ませる */
+  background:
+    linear-gradient(180deg,
+      rgba(11,26,20,0.72) 0%,
+      rgba(11,26,20,0.58) 38%,
+      rgba(11,26,20,0.82) 82%,
+      rgba(11,26,20,0.96) 100%),
+    url("img/hero.jpg");
+  background-size: cover;
+  background-position: center 42%;
+  background-repeat: no-repeat;
 }
 .hero::before {
   content: '';
   position: absolute; inset: 0;
-  background: radial-gradient(ellipse 72% 56% at 50% -12%, rgba(110,231,183,0.10) 0%, transparent 72%);
+  background:
+    radial-gradient(ellipse 60% 44% at 50% 46%, rgba(11,26,20,0.55) 0%, transparent 68%),
+    radial-gradient(ellipse 72% 56% at 50% -12%, rgba(110,231,183,0.12) 0%, transparent 72%);
   pointer-events: none;
 }
 .hero::after { content: none; }   /* 直線の五線は廃止 → 曲線＋音符のSVGへ */
@@ -367,7 +389,27 @@ nav {
   line-height: 1.85;
 }
 
-/* ── SNS PORTAL ── */
+/* ── SNS PORTAL 実写バンド ── */
+.sns-visual {
+  position: relative;
+  margin: 8px 0 44px;
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.sns-visual img {
+  display: block;
+  width: 100%;
+  height: clamp(220px, 34vw, 360px);
+  object-fit: cover;
+  object-position: center 60%;
+}
+.sns-visual::after {   /* 下端を背景に馴染ませる */
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, transparent 55%, rgba(16,30,23,0.55) 100%);
+  pointer-events: none;
+}
 .feature-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -982,6 +1024,9 @@ footer {
     <div class="sec-tag">SNS Portal</div>
     <h2 class="sec-title serif">データで「伸びる動画」を<br>一緒に作り続ける。</h2>
     <p class="sec-desc">感覚ではなくデータで判断できる状態をつくります。</p>
+    <figure class="sns-visual">
+      <img src="img/sns.jpg" alt="ギターと分析画面を映すノートPC・撮影機材のある制作環境" loading="lazy">
+    </figure>
     <div class="feature-grid">
       <div class="feature-card">
         <div class="feature-num">01</div>
