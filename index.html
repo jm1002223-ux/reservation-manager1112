@@ -393,21 +393,19 @@ nav {
 .sns-alt { padding: 0; }
 .sns-cover {
   position: relative;
-  padding: 116px 40px 92px;
-  /* 左に寄せた暗幕＋全体の沈み＋下端フェードで、写真と本文を地続きにする */
+  padding: 104px 40px 200px;   /* 下に余白を取り、写真が主役の帯を確保 */
+  /* 暗幕は「文字が乗る上部」だけに寄せ、中〜下段はギター・機材・分析画面を見せる */
   background:
-    linear-gradient(90deg,
-      rgba(11,26,20,0.90) 0%,
-      rgba(11,26,20,0.66) 42%,
-      rgba(11,26,20,0.34) 100%),
     linear-gradient(180deg,
-      rgba(11,26,20,0.30) 0%,
-      transparent 30%,
-      rgba(16,30,23,0.55) 78%,
+      rgba(11,26,20,0.90) 0%,
+      rgba(11,26,20,0.74) 26%,
+      rgba(11,26,20,0.34) 46%,
+      rgba(11,26,20,0.14) 62%,
+      rgba(16,30,23,0.42) 88%,
       var(--bg-card) 100%),
     url("img/sns.jpg");
   background-size: cover;
-  background-position: center 52%;
+  background-position: center 38%;
   background-repeat: no-repeat;
 }
 .sns-cover .sec-desc { margin-bottom: 0; color: var(--gray-hi); }
