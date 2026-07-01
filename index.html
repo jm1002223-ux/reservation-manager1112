@@ -389,27 +389,29 @@ nav {
   line-height: 1.85;
 }
 
-/* ── SNS PORTAL 実写バンド ── */
-.sns-visual {
+/* ── SNS PORTAL：写真を章扉の背景に。見出しを写真上に置いて一枚の構図に ── */
+.sns-alt { padding: 0; }
+.sns-cover {
   position: relative;
-  margin: 8px 0 44px;
-  border-radius: var(--r-lg);
-  overflow: hidden;
-  border: 1px solid var(--border);
+  padding: 116px 40px 92px;
+  /* 左に寄せた暗幕＋全体の沈み＋下端フェードで、写真と本文を地続きにする */
+  background:
+    linear-gradient(90deg,
+      rgba(11,26,20,0.90) 0%,
+      rgba(11,26,20,0.66) 42%,
+      rgba(11,26,20,0.34) 100%),
+    linear-gradient(180deg,
+      rgba(11,26,20,0.30) 0%,
+      transparent 30%,
+      rgba(16,30,23,0.55) 78%,
+      var(--bg-card) 100%),
+    url("img/sns.jpg");
+  background-size: cover;
+  background-position: center 52%;
+  background-repeat: no-repeat;
 }
-.sns-visual img {
-  display: block;
-  width: 100%;
-  height: clamp(220px, 34vw, 360px);
-  object-fit: cover;
-  object-position: center 60%;
-}
-.sns-visual::after {   /* 下端を背景に馴染ませる */
-  content: '';
-  position: absolute; inset: 0;
-  background: linear-gradient(180deg, transparent 55%, rgba(16,30,23,0.55) 100%);
-  pointer-events: none;
-}
+.sns-cover .sec-desc { margin-bottom: 0; color: var(--gray-hi); }
+.sns-body { padding: 56px 40px 96px; }
 .feature-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -708,6 +710,9 @@ footer {
   .hero { padding: 72px 20px 64px; min-height: 80vh; }
   .section { padding: 64px 20px; }
   .section-alt { padding: 64px 20px; }
+  .sns-alt { padding: 0; }
+  .sns-cover { padding: 76px 20px 60px; }
+  .sns-body { padding: 40px 20px 64px; }
   .problem-grid { grid-template-columns: 1fr; }
   .feature-grid  { grid-template-columns: 1fr; }
   .two-services  { grid-template-columns: 1fr; }
@@ -1019,14 +1024,16 @@ footer {
 </section>
 
 <!-- SNS PORTAL -->
-<div class="section-alt" id="sns">
-  <div class="inner">
-    <div class="sec-tag">SNS Portal</div>
-    <h2 class="sec-title serif">データで「伸びる動画」を<br>一緒に作り続ける。</h2>
-    <p class="sec-desc">感覚ではなくデータで判断できる状態をつくります。</p>
-    <figure class="sns-visual">
-      <img src="img/sns.jpg" alt="ギターと分析画面を映すノートPC・撮影機材のある制作環境" loading="lazy">
-    </figure>
+<div class="section-alt sns-alt" id="sns">
+  <div class="sns-cover">
+    <div class="inner">
+      <div class="sec-tag">SNS Portal</div>
+      <h2 class="sec-title serif">データで「伸びる動画」を<br>一緒に作り続ける。</h2>
+      <p class="sec-desc">感覚ではなくデータで判断できる状態をつくります。</p>
+    </div>
+  </div>
+  <div class="sns-body">
+   <div class="inner">
     <div class="feature-grid">
       <div class="feature-card">
         <div class="feature-num">01</div>
@@ -1053,6 +1060,7 @@ footer {
         <p>毎月データを集計し、翌月の改善アクションをレポートとして提出。感覚ではなくデータで判断できる状態にする。</p>
       </div>
     </div>
+   </div>
   </div>
 </div>
 
