@@ -711,6 +711,8 @@ footer {
   .sns-alt { padding: 0; }
   .sns-cover { padding: 76px 20px 60px; }
   .sns-body { padding: 40px 20px 64px; }
+  .sec-cover { padding: 76px 20px 120px; }
+  .sec-cover-body { padding: 40px 20px 64px; }
   .problem-grid { grid-template-columns: 1fr; }
   .feature-grid  { grid-template-columns: 1fr; }
   .two-services  { grid-template-columns: 1fr; }
@@ -851,6 +853,50 @@ footer {
 
 /* 数値ストリップ：内側の縦罫を消す */
 .stat-item { border-right: 0; }
+
+/* ══════════════════════════════════════════════
+   章扉（写真を見出しの背景に）— hero/SNSと同じ作法を汎用化
+   ══════════════════════════════════════════════ */
+.sec-cover {
+  position: relative;
+  padding: 104px 40px 180px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center 42%;
+}
+.sec-cover .inner { max-width: 900px; margin: 0 auto; }
+.sec-cover .sec-desc { margin-bottom: 0; color: var(--gray-hi); }
+.sec-cover-body { padding: 56px 40px 96px; }
+.sec-cover-body .inner { max-width: 900px; margin: 0 auto; }
+
+/* Lesson Portal：ピアノを弾く手（レッスンの瞬間） */
+.cover-lesson {
+  background-image:
+    linear-gradient(180deg,
+      rgba(11,26,20,0.90) 0%, rgba(11,26,20,0.72) 26%,
+      rgba(11,26,20,0.32) 46%, rgba(11,26,20,0.12) 62%,
+      rgba(11,26,20,0.55) 88%, var(--bg) 100%),
+    url("img/lesson.jpg");
+}
+/* Credentials：夜のデスク（分析実績） */
+.cover-cred {
+  background-image:
+    linear-gradient(180deg,
+      rgba(11,26,20,0.92) 0%, rgba(11,26,20,0.76) 26%,
+      rgba(11,26,20,0.40) 46%, rgba(11,26,20,0.20) 62%,
+      rgba(11,26,20,0.58) 88%, var(--bg) 100%),
+    url("img/credentials.jpg");
+}
+/* Pricing：超暗いピアノ鍵盤を全面背景に。カードが浮くよう強めの暗幕 */
+.pricing-alt {
+  background-image:
+    linear-gradient(180deg,
+      rgba(11,26,20,0.92) 0%, rgba(11,26,20,0.84) 50%, rgba(11,26,20,0.94) 100%),
+    url("img/pricing.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
 </style>
 </head>
 <body>
@@ -921,8 +967,8 @@ footer {
     <div class="stat-label">サービスがセットに</div>
   </div>
   <div class="stat-item">
-    <span class="stat-num">¥20,000</span>
-    <div class="stat-label">月額・一律料金</div>
+    <span class="stat-num">¥5,000</span>
+    <div class="stat-label">月額・先行モニター価格</div>
   </div>
 </div>
 
@@ -1064,10 +1110,16 @@ footer {
 
 <!-- LESSON PORTAL -->
 <!-- ↓ 修正①：AI Reportカードを削除し、3カードに変更 -->
-<section class="section" id="lesson">
-  <div class="sec-tag">Lesson Portal</div>
-  <h2 class="sec-title serif">増えた生徒を、<br>仕組みで運営する。</h2>
-  <p class="sec-desc">管理の手間をゼロに近づけ、レッスンと音楽に集中できる時間を取り戻す。</p>
+<section id="lesson">
+  <div class="sec-cover cover-lesson">
+    <div class="inner">
+      <div class="sec-tag">Lesson Portal</div>
+      <h2 class="sec-title serif">増えた生徒を、<br>仕組みで運営する。</h2>
+      <p class="sec-desc">管理の手間をゼロに近づけ、レッスンと音楽に集中できる時間を取り戻す。</p>
+    </div>
+  </div>
+  <div class="sec-cover-body">
+   <div class="inner">
   <div class="feature-grid">
     <div class="feature-card">
       <div class="feature-num">01</div>
@@ -1096,33 +1148,35 @@ footer {
       <video src="demo.mp4" poster="demo-poster.jpg" autoplay muted loop playsinline controls preload="metadata"></video>
     </div>
   </div>
+   </div>
+  </div>
 </section>
 
 <!-- PRICING -->
 <!-- ↓ 修正①：Lesson Portal料金表からAI月次レポート自動生成を削除 -->
-<div class="section-alt" id="pricing">
+<div class="section-alt pricing-alt" id="pricing">
   <div class="inner">
     <div class="sec-tag">PRICING</div>
-    <h2 class="sec-title serif">シンプルな、<br>一律料金。</h2>
-    <p class="sec-desc">SNS Portal と Lesson Portal、両方がこの料金に含まれます。</p>
+    <h2 class="sec-title serif">先行モニター価格で、<br>まず始められる。</h2>
+    <p class="sec-desc">SNS Portal と Lesson Portal、両方がこの料金に含まれます。これから一緒に実績を作っていく先行フェーズのため、先着数名限定でモニター価格をご案内しています。</p>
     <div class="pricing-wrap">
       <div class="plan-card">
-        <div class="plan-tag">Growthbase Plan</div>
-        <div class="plan-name serif">通常 ¥25,000 / 月のところ</div>
-        <div class="plan-price">¥20,000</div>
+        <div class="plan-tag">先行モニター価格 — 先着数名限定</div>
+        <div class="plan-original">通常 ¥20,000 / 月</div>
+        <div class="plan-price">¥5,000</div>
         <div class="plan-price-unit">/ 月</div>
         <div class="plan-divider"></div>
         <div class="plan-includes-label">含まれるもの</div>
         <div class="plan-cols">
           <div class="plan-col">
-            <div class="plan-col-title">SNS Portal <span style="color:var(--gray-lo);font-size:10px">（月額¥20,000相当）</span></div>
+            <div class="plan-col-title">SNS Portal</div>
             <ul>
               <li>YouTube分析・コンテンツ戦略</li>
               <li>月次レポート・改善提案</li>
             </ul>
           </div>
           <div class="plan-col">
-            <div class="plan-col-title">Lesson Portal <span style="color:var(--gray-lo);font-size:10px">（月額¥5,000相当）</span></div>
+            <div class="plan-col-title">Lesson Portal</div>
             <ul>
               <li>予約管理・生徒管理</li>
               <li>生徒の上達可視化</li>
@@ -1142,10 +1196,16 @@ footer {
 
 <!-- CREDENTIALS -->
 <!-- ↓ 修正②：ホテル業・外食産業→サービス業・小売業 -->
-<section class="section">
-  <div class="sec-tag">APPENDIX — 運営者について</div>
-  <h2 class="sec-title serif">運営者のデータ分析実績</h2>
-  <p class="sec-desc">感覚ではなくデータで動く、7年以上の分析経験が土台にあります。</p>
+<section>
+  <div class="sec-cover cover-cred">
+    <div class="inner">
+      <div class="sec-tag">APPENDIX — 運営者について</div>
+      <h2 class="sec-title serif">運営者のデータ分析実績</h2>
+      <p class="sec-desc">感覚ではなくデータで動く、7年以上の分析経験が土台にあります。</p>
+    </div>
+  </div>
+  <div class="sec-cover-body">
+   <div class="inner">
   <div class="cred-grid">
     <div class="cred-card">
       <div class="cred-num">01</div>
@@ -1178,6 +1238,8 @@ footer {
       </div>
     </div>
   </div>
+   </div>
+  </div>
 </section>
 
 <!-- CTA BOTTOM -->
@@ -1189,7 +1251,7 @@ footer {
     <span class="cta-meta-item">初期費用 ¥0</span>
     <span class="cta-meta-item">契約縛りなし</span>
     <span class="cta-meta-item">いつでも解約可能</span>
-    <span class="cta-meta-item">月額 ¥20,000</span>
+    <span class="cta-meta-item">月額 ¥5,000（先行モニター）</span>
   </div>
 </section>
 
