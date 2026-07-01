@@ -8,22 +8,23 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;600&family=Noto+Sans+JP:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg:        #0b1a14;
-  --bg-card:   #101e17;
-  --bg-raised: #152119;
-  --mint:      #6EE7B7;
-  --mint-dim:  #3ecf92;
-  --mint-muted:#1a4535;
-  --mint-faint:#0f2a20;
-  --white:     #f4f9f6;
-  --gray-hi:   #cdddd5;
-  --gray-mid:  #7a9a8a;
-  --gray-lo:   #3a5448;
-  --border:    rgba(110,231,183,0.12);
-  --border-hi: rgba(110,231,183,0.28);
-  --r-sm: 6px;
-  --r-md: 12px;
-  --r-lg: 20px;
+  /* ── 温かいエスプレッソ黒 × アンティーク真鍮 × アイボリー ── */
+  --bg:        #17140F;   /* 温かい近黒（エスプレッソ） */
+  --bg-card:   #1C1811;
+  --bg-raised: #221D15;
+  --mint:      #C2A15E;   /* アンティーク真鍮＝アクセント（変数名は旧テーマ踏襲） */
+  --mint-dim:  #A98A4B;
+  --mint-muted:#5C4D2E;
+  --mint-faint:#211A10;
+  --white:     #EFE8DA;   /* 温かいアイボリー／古紙 */
+  --gray-hi:   #CBBFA9;
+  --gray-mid:  #8F836C;
+  --gray-lo:   #5A5040;
+  --border:    rgba(236,228,214,0.08);
+  --border-hi: rgba(194,161,94,0.30);
+  --r-sm: 2px;
+  --r-md: 3px;
+  --r-lg: 4px;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -95,29 +96,25 @@ nav {
   content: '';
   position: absolute; inset: 0;
   background:
-    radial-gradient(ellipse 80% 60% at 50% -10%, rgba(110,231,183,0.1) 0%, transparent 70%),
-    radial-gradient(ellipse 40% 40% at 80% 80%, rgba(110,231,183,0.05) 0%, transparent 60%);
+    radial-gradient(ellipse 70% 55% at 50% -15%, rgba(194,161,94,0.09) 0%, transparent 72%),
+    repeating-linear-gradient(180deg, rgba(194,161,94,0.05) 0 1px, transparent 1px 30px);
+  -webkit-mask-image: linear-gradient(180deg, #000 52%, transparent 92%);
+          mask-image: linear-gradient(180deg, #000 52%, transparent 92%);
   pointer-events: none;
 }
 .hero-label {
-  display: inline-flex; align-items: center; gap: 8px;
+  display: inline-flex; align-items: center; gap: 14px;
   font-family: 'DM Mono', monospace;
   font-size: 11px;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.24em;
   color: var(--mint);
-  background: var(--mint-faint);
-  border: 1px solid var(--border-hi);
-  padding: 5px 16px;
-  border-radius: 99px;
   margin-bottom: 44px;
   text-transform: uppercase;
 }
 .hero-label::before {
   content: '';
-  width: 6px; height: 6px;
-  border-radius: 50%;
+  width: 22px; height: 1px;
   background: var(--mint);
-  animation: pulse 2s ease-in-out infinite;
 }
 @keyframes pulse {
   0%,100% { opacity: 1; transform: scale(1); }
@@ -310,8 +307,8 @@ nav {
   position: relative;
   transition: border-color 0.2s;
 }
-.funnel-step.sns .funnel-box  { border-color: rgba(110,231,183,0.2); }
-.funnel-step.lp  .funnel-box  { border-color: rgba(110,231,183,0.4); background: var(--mint-faint); }
+.funnel-step.sns .funnel-box  { border-color: rgba(194,161,94,0.2); }
+.funnel-step.lp  .funnel-box  { border-color: rgba(194,161,94,0.4); background: var(--mint-faint); }
 .funnel-step.lp  .funnel-box .funnel-label { color: var(--mint); }
 .funnel-label {
   font-size: 12px;
@@ -419,7 +416,7 @@ nav {
   border-radius: var(--r-lg);
   overflow: hidden;
   background: #000;
-  box-shadow: 0 0 70px rgba(110,231,183,0.14);
+  box-shadow: 0 24px 64px rgba(0,0,0,0.55);
 }
 .lesson-demo-frame video {
   display: block;
@@ -679,13 +676,13 @@ footer {
 <nav>
   <div class="nav-logo">
     <svg width="150" height="40" viewBox="0 0 300 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect x="8" y="8" width="64" height="64" rx="8" stroke="#6EE7B7" stroke-width="3" fill="none"/>
-      <line x1="8" y1="30" x2="72" y2="30" stroke="#6EE7B7" stroke-width="2.5"/>
-      <line x1="29" y1="8" x2="29" y2="47" stroke="#6EE7B7" stroke-width="2.5"/>
-      <line x1="51" y1="8" x2="51" y2="50" stroke="#6EE7B7" stroke-width="2.5"/>
-      <rect x="34" y="54" width="12" height="10" rx="2" fill="#6EE7B7"/>
+      <rect x="8" y="8" width="64" height="64" rx="8" stroke="#C2A15E" stroke-width="3" fill="none"/>
+      <line x1="8" y1="30" x2="72" y2="30" stroke="#C2A15E" stroke-width="2.5"/>
+      <line x1="29" y1="8" x2="29" y2="47" stroke="#C2A15E" stroke-width="2.5"/>
+      <line x1="51" y1="8" x2="51" y2="50" stroke="#C2A15E" stroke-width="2.5"/>
+      <rect x="34" y="54" width="12" height="10" rx="2" fill="#C2A15E"/>
       <text x="88" y="42" font-family="Georgia, serif" font-size="26" fill="#f4f9f6">Growthbase</text>
-      <text x="89" y="58" font-family="monospace" font-size="9" fill="#6EE7B7" letter-spacing="2.5">MUSIC GROWTH PLATFORM</text>
+      <text x="89" y="58" font-family="monospace" font-size="9" fill="#C2A15E" letter-spacing="2.5">MUSIC GROWTH PLATFORM</text>
     </svg>
   </div>
   <ul class="nav-links">
