@@ -100,17 +100,17 @@ nav {
   background: radial-gradient(ellipse 72% 56% at 50% -12%, rgba(110,231,183,0.10) 0%, transparent 72%);
   pointer-events: none;
 }
-.hero::after {                 /* 五線譜（金）— 署名的モチーフ */
-  content: '';
-  position: absolute; left: 0; right: 0; top: 45%;
-  height: 100px; transform: translateY(-50%);
-  background: repeating-linear-gradient(180deg, var(--gold) 0 1px, transparent 1px 25px);
-  opacity: 0.22;
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 16%, #000 84%, transparent);
-          mask-image: linear-gradient(90deg, transparent, #000 16%, #000 84%, transparent);
-  pointer-events: none;
-}
+.hero::after { content: none; }   /* 直線の五線は廃止 → 曲線＋音符のSVGへ */
 .hero > * { position: relative; z-index: 1; }
+.hero > .hero-art { z-index: 0; }
+.hero-art {
+  position: absolute; inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  -webkit-mask-image: radial-gradient(ellipse 94% 84% at 50% 46%, #000 50%, transparent 92%);
+          mask-image: radial-gradient(ellipse 94% 84% at 50% 46%, #000 50%, transparent 92%);
+}
+.hero-art svg { width: 100%; height: 100%; display: block; }
 .hero-label {
   display: inline-flex; align-items: center; gap: 14px;
   font-family: 'DM Mono', monospace;
@@ -834,6 +834,27 @@ footer {
 
 <!-- HERO -->
 <section class="hero">
+  <div class="hero-art" aria-hidden="true">
+    <svg viewBox="0 0 1440 780" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <path id="staffA" d="M-80,300 C300,244 720,352 1080,296 C1300,262 1440,308 1540,300"/>
+        <path id="staffB" d="M-80,512 C320,568 760,460 1160,528 C1360,562 1470,510 1540,516"/>
+      </defs>
+      <g fill="none" stroke="#D4B36A" stroke-width="1" stroke-opacity="0.38" stroke-linecap="round">
+        <use href="#staffA" y="0"/><use href="#staffA" y="13"/><use href="#staffA" y="26"/><use href="#staffA" y="39"/><use href="#staffA" y="52"/>
+        <use href="#staffB" y="0"/><use href="#staffB" y="13"/><use href="#staffB" y="26"/><use href="#staffB" y="39"/><use href="#staffB" y="52"/>
+      </g>
+      <g fill="#D4B36A" fill-opacity="0.6" font-family="Georgia, 'Times New Roman', serif">
+        <text x="250" y="318" font-size="50">&#9834;</text>
+        <text x="545" y="356" font-size="58">&#9835;</text>
+        <text x="880" y="322" font-size="44">&#9833;</text>
+        <text x="1150" y="332" font-size="60">&#9836;</text>
+        <text x="410" y="556" font-size="48">&#9834;</text>
+        <text x="800" y="516" font-size="54">&#9835;</text>
+        <text x="1120" y="560" font-size="44">&#9833;</text>
+      </g>
+    </svg>
+  </div>
   <div class="hero-label">個人レッスン講師向けサービス</div>
   <h1 class="serif">音楽だけで、<br><em>生きていく。</em></h1>
   <p class="hero-sub">集客の壁を越えて、音楽で生活できる講師を増やす。<br>SNS Portal × Lesson Portal の2サービスで、集客から運営まで一貫して改善します。</p>
