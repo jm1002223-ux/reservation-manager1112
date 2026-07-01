@@ -404,6 +404,29 @@ nav {
   line-height: 1.85;
 }
 
+/* ── LESSON DEMO VIDEO ── */
+.lesson-demo { margin-top: 44px; }
+.lesson-demo-cap {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--gray-mid);
+  text-align: center;
+  margin-bottom: 16px;
+}
+.lesson-demo-frame {
+  border: 1px solid var(--border-hi);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  background: #000;
+  box-shadow: 0 0 70px rgba(110,231,183,0.14);
+}
+.lesson-demo-frame video {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
 /* ── PRICING ── */
 .pricing-wrap {
   max-width: 600px;
@@ -856,6 +879,14 @@ footer {
       <div class="feature-tag">Vacancy Alert</div>
       <h3>空き枠をボタン一つで告知する</h3>
       <p>キャンセルで空きが出たとき、ボタンを押すだけで登録生徒全員にメール通知。埋め戻しが手動連絡なしで完結。</p>
+    </div>
+  </div>
+
+  <!-- デモ動画 -->
+  <div class="lesson-demo">
+    <div class="lesson-demo-cap">— 実際の画面：生徒の予約 → 生徒管理・カルテ → 上達分析（約1分）</div>
+    <div class="lesson-demo-frame">
+      <video src="demo.mp4" poster="demo-poster.jpg" autoplay muted loop playsinline controls preload="metadata"></video>
     </div>
   </div>
 </section>
